@@ -18,6 +18,27 @@ EditorBuildSettings:
     path: Assets/My_Snake/Scenes/Help.unity
     guid: fdb8c4db81b26a24aa223ba20f2e24b1
   - enabled: 1
+    path: Assets/My_Snake/Scenes/Color.unity
+    guid: d51c579119245f94b92034c4163fc827
+  - enabled: 1
     path: Assets/My_Snake/Scenes/ChooseLevel.unity
     guid: c21a49a9b97bae043ab026b0adbfd2fb
+  - enabled: 1
+    path: Assets/My_Snake/Scenes/Infinite.unity
+    guid: b5d644c295623144a936ae16a19ca194
+  - enabled: 1
+    path: Assets/My_Snake/Scenes/Risk.unity
+    guid: ddb3976a76cd876458fcf2a13039be5c
+  - enabled: 1
+    path: Assets/My_Snake/Scenes/Level1.unity
+    guid: b44c60fbb75b0fe4c90c29e65d2af4dc
+  - enabled: 1
+    path: Assets/My_Snake/Scenes/Level2.unity
+    guid: 80fb269b37379bc43a32ff006527586e
+  - enabled: 1
+    path: Assets/My_Snake/Scenes/Level3.unity
+    guid: a7b8fae46fd349a458a8438a2e0f2474
+  - enabled: 1
+    path: Assets/My_Snake/Scenes/Level4.unity
+    guid: bd7ab3265313efc4492a8127c701ea05
   m_configObjects: {}

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - sound
   - globalobject
+  - wall
+  - snake
+  - snakebody
   layers:
   - Default
   - TransparentFX

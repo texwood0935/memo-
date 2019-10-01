@@ -5,8 +5,8 @@ using UnityEngine;
 public class AllData : MonoBehaviour {
 
     public static AllData Instance = new AllData();
-    public float MusicProgress;
     public float MusicValue=1;
+    public bool MusicToggle=true;
 
 	void Start () {
         //DontDestroyOnLoad(this.gameObject);
