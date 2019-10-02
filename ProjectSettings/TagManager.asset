@@ -9,6 +9,12 @@ TagManager:
   - wall
   - snake
   - snakebody
+  - food
+  - boom
+  - energy
+  - mushroom
+  - poigress
+  - sheild
   layers:
   - Default
   - TransparentFX
