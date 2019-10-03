@@ -53,19 +53,19 @@ public class LevelChoose : MonoBehaviour {
         switch (whichChoose)
         {
             case 1:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(8);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(8);
                 break;
             case 2:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(9);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(9);
                 break;
             case 3:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(10);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(10);
                 break;
             case 4:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(11);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(11);
                 break;
             case 5:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1);
                 break;
         }
     }

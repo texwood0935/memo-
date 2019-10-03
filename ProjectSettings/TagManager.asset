@@ -57,3 +57,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: snake
+    uniqueID: 3573589793
+    locked: 0
+  - name: wall
+    uniqueID: 837502897
+    locked: 0

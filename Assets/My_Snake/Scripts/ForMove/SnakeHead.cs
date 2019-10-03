@@ -17,6 +17,8 @@ public class SnakeHead : MonoBehaviour {
     private Vector3 headPos;
     private Vector3 mousePos;
     private Vector3 direction;
+    private Vector2 d;
+    private Vector2 d2;
     private Rigidbody2D rdby;
     private Transform canvas;
     private float ospeed;
@@ -28,7 +30,6 @@ public class SnakeHead : MonoBehaviour {
 
     void Awake()
     {
-        Debug.Log("Awake");
         for(int i=0;i<menu.Length;i++)
             menu[i].SetActive(false);
         isRiskDead = false;
@@ -36,11 +37,14 @@ public class SnakeHead : MonoBehaviour {
         sheilderCircle.SetActive(false);
     }
     void Start () {
+        Debug.Log("I am running");
+        Time.timeScale = 1;
         rdby = gameObject.GetComponent<Rigidbody2D>();
         canvas = GameObject.Find("Snake").transform;
         ospeed = speed;
         oPosLength = posLength;
         isRiskDead = false;
+        d2 = d = new Vector2(1, 0);
         switch (this.gameObject.scene.name)
         {
             case "Level1": ScoreRecord.Instance.UpdateLevelUI(1); break;
@@ -48,12 +52,25 @@ public class SnakeHead : MonoBehaviour {
             case "Level3": ScoreRecord.Instance.UpdateLevelUI(3); break;
             case "Level4": ScoreRecord.Instance.UpdateLevelUI(4); break;
         }
+        Debug.Log("I am here");
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        if(!isRiskDead)
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void FixedUpdate () {
+        Debug.Log(" now I am here");
+        if (!isRiskDead)
             Move();
+        else
+        {
+            Quaternion q = Quaternion.identity;
+            q.SetLookRotation(new Vector3(0, 0, -1), new Vector3(d2.x, d2.y, 0));
+            gameObject.transform.rotation = q;
+        }
 	}
 
     public static bool IsRiskDead
@@ -86,11 +103,22 @@ public class SnakeHead : MonoBehaviour {
         headPos = Camera.main.WorldToScreenPoint(this.gameObject.GetComponent<Transform>().position);
         mousePos = Input.mousePosition;
         direction = mousePos - headPos;
-        if (direction.magnitude>r)
+        d = new Vector2(direction.x, direction.y);
+        if (d.magnitude>r)
         {
-            direction = direction.normalized;
-            rdby.velocity = new Vector2(direction.x, direction.y) * speed;
-            gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+            d = d.normalized;
+            d2 = d;
+            rdby.velocity = new Vector2(d.x, d.y) * speed;
+            Quaternion q = Quaternion.identity;
+            q.SetLookRotation(new Vector3(0, 0, -1), new Vector3(d.x, d.y, 0));
+            gameObject.transform.rotation = q;
+        }
+        else
+        {
+            rdby.velocity = new Vector2(d2.x, d2.y) * speed;
+            Quaternion q = Quaternion.identity;
+            q.SetLookRotation(new Vector3(0, 0, -1), new Vector3(d2.x, d2.y, 0));
+            gameObject.transform.rotation = q;
         }
         Follow();
     }
@@ -114,7 +142,9 @@ public class SnakeHead : MonoBehaviour {
         rdby.velocity = new Vector2(0, 0);
         isRiskDead = true;
         menu[0].SetActive(true);
-        direction = new Vector3(0, 0, 0);
+        Quaternion q = Quaternion.identity;
+        q.SetLookRotation(new Vector3(0, 0, -1), new Vector3(d2.x, d2.y, 0));
+        gameObject.transform.rotation = q;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -124,7 +154,8 @@ public class SnakeHead : MonoBehaviour {
             Destroy(collision.gameObject);
             ScoreRecord.Instance.UpdateUI(10, bodyList.Count);
             Grow();
-            ToolPool.Instance.CreateTool();
+            if(ToolPool.Instance!=null)
+                ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "boom")
         {
@@ -139,7 +170,8 @@ public class SnakeHead : MonoBehaviour {
                 }
                 ScoreRecord.Instance.UpdateUI(-20, bodyList.Count);
             }
-            ToolPool.Instance.CreateTool();
+            if (ToolPool.Instance != null)
+                ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "energy")
         {
@@ -152,7 +184,8 @@ public class SnakeHead : MonoBehaviour {
                 ScoreRecord.Instance.UpdateSpeedUI(8);
                 Invoke("SpeedReset", 6.0f);
             }
-            ToolPool.Instance.CreateTool();
+            if (ToolPool.Instance != null)
+                ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "mushroom")
         {
@@ -161,7 +194,8 @@ public class SnakeHead : MonoBehaviour {
             for (int i = 0; i < num ; i++)
                 Grow();
             ScoreRecord.Instance.UpdateUI(20, bodyList.Count);
-            ToolPool.Instance.CreateTool();
+            if (ToolPool.Instance != null)
+                ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "poigress")
         {
@@ -184,7 +218,8 @@ public class SnakeHead : MonoBehaviour {
                 }
                 ScoreRecord.Instance.UpdateUI(-10, bodyList.Count);
             }
-            ToolPool.Instance.CreateTool();
+            if (ToolPool.Instance != null)
+                ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "sheild")
         {
@@ -192,7 +227,8 @@ public class SnakeHead : MonoBehaviour {
             sheilderCircle.SetActive(true);
             issheilder = true;
             Invoke("SheilderReset", 5.0f);
-            ToolPool.Instance.CreateTool();
+            if (ToolPool.Instance != null)
+                ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "key")
         {
@@ -209,7 +245,9 @@ public class SnakeHead : MonoBehaviour {
             CancelInvoke();
             rdby.velocity = new Vector2(0, 0);
             isRiskDead = true;
-            direction = new Vector3(0, 0, 0);
+            Quaternion q = Quaternion.identity;
+            q.SetLookRotation(new Vector3(0, 0, -1), new Vector3(d2.x, d2.y, 0));
+            gameObject.transform.rotation = q;
             if (menu.Length>=3)
                 menu[2].SetActive(true);
         }

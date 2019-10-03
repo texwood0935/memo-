@@ -54,19 +54,19 @@ public class GameChoose : MonoBehaviour
         switch (whichChoose)
         {
             case 1:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(4);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(4);
                 break;
             case 2:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(5);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(5);
                 break;
             case 3:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(6);
                 break;
             case 4:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7);
                 break;
             case 5:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
                 break;
         }
     }

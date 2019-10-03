@@ -636,9 +636,11 @@ MonoBehaviour:
   score: 0
   length: 0
   speed: 5
+  level: 1
   scoreText: {fileID: 537174371}
   lengthText: {fileID: 749022848}
   speedText: {fileID: 522760673}
+  levelText: {fileID: 0}
 --- !u!1 &438711530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1571,21 @@ Prefab:
       propertyPath: menu.Array.data[1]
       value: 
       objectReference: {fileID: 1516595929}
+    - target: {fileID: 50813751617767858, guid: e6bd0a4d75173624184e15232f4fcdad,
+        type: 2}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50813751617767858, guid: e6bd0a4d75173624184e15232f4fcdad,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50813751617767858, guid: e6bd0a4d75173624184e15232f4fcdad,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6bd0a4d75173624184e15232f4fcdad, type: 2}
   m_IsPrefabAsset: 0
@@ -1818,8 +1835,8 @@ Camera:
   m_GameObject: {fileID: 1059104677}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.70980394, g: 0.41176474, b: 0.3372549, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}

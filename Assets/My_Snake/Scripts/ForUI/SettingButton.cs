@@ -30,7 +30,7 @@ public class SettingButton : MonoBehaviour {
         switch (whichChoose)
         {
             case 1:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
                 break;
             case 2:
                 Time.timeScale = 1;
