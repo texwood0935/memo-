@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ControlMusic : MonoBehaviour {
 
-    public AudioSource asound=ForMusicUnchange.maudio;
+    private AudioSource asound=ForMusicUnchange.maudio;
     public Slider sd;
 
 	// Use this for initialization

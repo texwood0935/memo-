@@ -16,14 +16,10 @@ public class ForMusicUnchange : MonoBehaviour {
         {
             musicInstant = (GameObject)Instantiate(objPerfabMusic);
             
-            Debug.Log("Don't Find it");
         }
-        else
-            Debug.Log("Find it");
         if(maudio==null)
             maudio = (AudioSource)musicInstant.GetComponent<AudioSource>();
         maudio.volume = AllData.Instance.MusicValue;
-        Debug.Log("2:" + AllData.Instance.MusicValue);
     }
     void Update()
     {

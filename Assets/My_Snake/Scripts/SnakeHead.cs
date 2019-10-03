@@ -11,6 +11,9 @@ public class SnakeHead : MonoBehaviour {
     public float r = 3.0f;
     public int posLength = 12;
     public int UPposLength = 12;
+    public GameObject[] menu;
+    public GameObject sheilderCircle;
+
     private Vector3 headPos;
     private Vector3 mousePos;
     private Vector3 direction;
@@ -19,9 +22,16 @@ public class SnakeHead : MonoBehaviour {
     private float ospeed;
     private int oPosLength;
     private bool isUP = false;
+    private bool issheilder = false;
     private static bool isRiskDead = false;
 
-    // Use this for initialization
+    void Awake()
+    {
+        for(int i=0;i<menu.Length;i++)
+            menu[i].SetActive(false);
+        isRiskDead = false;
+        sheilderCircle.SetActive(false);
+    }
     void Start () {
         rdby = gameObject.GetComponent<Rigidbody2D>();
         canvas = GameObject.Find("Snake").transform;
@@ -79,14 +89,20 @@ public class SnakeHead : MonoBehaviour {
         speed = ospeed;
         posLength = oPosLength;
         isUP = false;
+        ScoreRecord.Instance.UpdateSpeedUI(5);
+    }
+    void SheilderReset()
+    {
+        issheilder = false;
+        sheilderCircle.SetActive(false);
     }
 
     void Die()
     {
-        Debug.Log("Die");
         CancelInvoke();
         rdby.velocity = new Vector2(0, 0);
         isRiskDead = true;
+        menu[0].SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -94,17 +110,22 @@ public class SnakeHead : MonoBehaviour {
         if(collision.tag == "food")
         {
             Destroy(collision.gameObject);
+            ScoreRecord.Instance.UpdateUI(10, bodyList.Count);
             Grow();
             ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "boom")
         {
             Destroy(collision.gameObject);
-            int num = bodyList.Count;
-            for (int i = 0; i < num/2; i++)
+            if(!issheilder)
             {
-                Destroy(bodyList[bodyList.Count - 1].gameObject);
-                bodyList.Remove(bodyList[bodyList.Count - 1]);
+                int num = bodyList.Count;
+                for (int i = 0; i < num / 2; i++)
+                {
+                    Destroy(bodyList[bodyList.Count - 1].gameObject);
+                    bodyList.Remove(bodyList[bodyList.Count - 1]);
+                }
+                ScoreRecord.Instance.UpdateUI(-20, bodyList.Count);
             }
             ToolPool.Instance.CreateTool();
         }
@@ -116,6 +137,7 @@ public class SnakeHead : MonoBehaviour {
                 isUP = true;
                 speed = speed * 1.5f;
                 posLength = UPposLength;
+                ScoreRecord.Instance.UpdateSpeedUI(8);
                 Invoke("SpeedReset", 6.0f);
             }
             ToolPool.Instance.CreateTool();
@@ -126,30 +148,38 @@ public class SnakeHead : MonoBehaviour {
             int num = bodyList.Count;
             for (int i = 0; i < num ; i++)
                 Grow();
+            ScoreRecord.Instance.UpdateUI(20, bodyList.Count);
             ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "poigress")
         {
             Destroy(collision.gameObject);
-            if(bodyList.Count>=2)
+            if(!issheilder)
             {
-                for (int i = 0; i < 2; i++)
+                if (bodyList.Count >= 2)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Destroy(bodyList[bodyList.Count - 1].gameObject);
+                        bodyList.Remove(bodyList[bodyList.Count - 1]);
+                    }
+
+                }
+                else if (bodyList.Count == 1)
                 {
                     Destroy(bodyList[bodyList.Count - 1].gameObject);
                     bodyList.Remove(bodyList[bodyList.Count - 1]);
                 }
-                    
-            }
-            else if(bodyList.Count == 1)
-            {
-                Destroy(bodyList[bodyList.Count - 1].gameObject);
-                bodyList.Remove(bodyList[bodyList.Count - 1]);
+                ScoreRecord.Instance.UpdateUI(-10, bodyList.Count);
             }
             ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "sheild")
         {
             Destroy(collision.gameObject);
+            sheilderCircle.SetActive(true);
+            issheilder = true;
+            Invoke("SheilderReset", 5.0f);
             ToolPool.Instance.CreateTool();
         }
         else if (collision.tag == "wall")
