@@ -20,6 +20,7 @@ TagManager:
   - door
   - key
   - exit
+  - dia
   layers:
   - Default
   - TransparentFX
@@ -62,4 +63,7 @@ TagManager:
     locked: 0
   - name: wall
     uniqueID: 837502897
+    locked: 0
+  - name: number
+    uniqueID: 3910823633
     locked: 0

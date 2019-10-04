@@ -28,7 +28,7 @@ EditorBuildSettings:
     guid: d51c579119245f94b92034c4163fc827
   - enabled: 1
     path: Assets/My_Snake/Scenes/Infinite.unity
-    guid: b5d644c295623144a936ae16a19ca194
+    guid: bb75662df073fc848b606ca908815ef6
   - enabled: 1
     path: Assets/My_Snake/Scenes/Level1.unity
     guid: b8eb651069b46664181b12cd3859af93
