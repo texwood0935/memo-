@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HelpChooseMenu : MonoBehaviour {
 
+    public AudioSource music;
     public Image chooseMenu;
     public Sprite[] chooseSprites;
     public GameObject[] button;
@@ -12,6 +13,7 @@ public class HelpChooseMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Time.timeScale = 1;
         whichChoose = 1;
         chooseMenu.sprite = chooseSprites[0];
         Button btn1 = (Button)button[0].GetComponent<Button>();
@@ -21,28 +23,43 @@ public class HelpChooseMenu : MonoBehaviour {
         Button btn5 = (Button)button[4].GetComponent<Button>();
         btn1.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 1;
             Choose();
         });
         btn2.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 2;
             Choose();
         });
         btn3.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 3;
             Choose();
         });
         btn4.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 4;
             Choose();
         });
         btn5.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 5;
-            Choose();
+            Invoke("Choose", music.clip.length / 2);
         });
     }
 	

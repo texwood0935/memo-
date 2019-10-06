@@ -12,6 +12,7 @@ public class SnakeHead_Infinite : MonoBehaviour {
     public float xoffset = 3.0f;
     public int posLength = 12;
     public GameObject[] menu;
+    public AudioSource[] music;
 
     private Vector3 headPos;
     private Vector3 mousePos;
@@ -128,6 +129,9 @@ public class SnakeHead_Infinite : MonoBehaviour {
     {
         if (collision.tag == "food")
         {
+            music[0].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[0].Play();
             NumberUP number = collision.gameObject.GetComponent<NumberUP>();
             int num = number.Value;
             for (int i = 0; i < num; i++)
@@ -144,6 +148,9 @@ public class SnakeHead_Infinite : MonoBehaviour {
                 Die();
             else
             {
+                music[1].volume = AllData.Instance.MusicEffectValue;
+                if (AllData.Instance.MusicEffectToggle)
+                    music[1].Play();
                 Destroy(collision.gameObject);
                 for (int i = 0; i < num; i++)
                 {

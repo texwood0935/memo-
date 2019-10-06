@@ -21,6 +21,9 @@ TagManager:
   - key
   - exit
   - dia
+  - color
+  - colorline
+  - borden
   layers:
   - Default
   - TransparentFX

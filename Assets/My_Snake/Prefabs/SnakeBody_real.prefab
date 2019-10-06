@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4650610153392128}
   - component: {fileID: 212036077267188386}
+  - component: {fileID: 114559291777505540}
   m_Layer: 0
   m_Name: SnakeBody_real
   m_TagString: Untagged
@@ -40,6 +41,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114559291777505540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329466294684186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918ca9c11951cf74ebb06b86ec4ac991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wardrobe:
+  - {fileID: 21300000, guid: bc729117c9f4f0946b9a93bca169a8ff, type: 3}
+  - {fileID: 21300000, guid: f11e227ca77bdf34387b255b7ca60914, type: 3}
+  - {fileID: 21300000, guid: 9e1fd5173eed9cd43b94e0ca10527bb3, type: 3}
+  - {fileID: 21300000, guid: a727cc5c6a5480049b023623eb83d3bd, type: 3}
+  who: {fileID: 212036077267188386}
 --- !u!212 &212036077267188386
 SpriteRenderer:
   m_ObjectHideFlags: 1

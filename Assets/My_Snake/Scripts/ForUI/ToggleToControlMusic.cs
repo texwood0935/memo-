@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ToggleToControlMusic : MonoBehaviour {
 
     public GameObject obj;
+    public AudioSource music;
     private Toggle toggle;
     private AudioSource ourmusic = ForMusicUnchange.maudio;
     private bool isClick=true;
@@ -24,7 +25,10 @@ public class ToggleToControlMusic : MonoBehaviour {
 	
 	public void OnToggleClick(Toggle toggle ,bool value)
     {
-        if(isClick)
+        music.volume = AllData.Instance.MusicEffectValue;
+        if(AllData.Instance.MusicEffectToggle)
+            music.Play();
+        if (isClick)
         {
             isClick = !isClick;
             ourmusic.Stop();
@@ -36,6 +40,5 @@ public class ToggleToControlMusic : MonoBehaviour {
             ourmusic.Play();
             AllData.Instance.MusicToggle = isClick;
         }
-        Debug.Log("You Click Me!");
     }
 }

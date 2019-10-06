@@ -7,11 +7,13 @@ public class StartChooseMenu : MonoBehaviour {
 
     public Image chooseMenu;
     public GameObject[] button;
+    public AudioSource music;
     private int whichChoose;
 
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1;
         whichChoose = 1;
         Button btn1 = (Button)button[0].GetComponent<Button>();
         Button btn2 = (Button)button[1].GetComponent<Button>();
@@ -19,30 +21,36 @@ public class StartChooseMenu : MonoBehaviour {
         Button btn4 = (Button)button[3].GetComponent<Button>();
         btn1.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 1;
-            Choose();
+            Invoke("Choose", music.clip.length/2);
         });
         btn2.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 2;
-            Choose();
+            Invoke("Choose", music.clip.length/2);
         });
         btn3.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 3;
-            Choose();
+            Invoke("Choose", music.clip.length/2);
         });
         btn4.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 4;
-            Choose();
+            Invoke("Choose", music.clip.length/2);
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     public void Choose()
     {

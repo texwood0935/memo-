@@ -13,6 +13,7 @@ public class SnakeHead : MonoBehaviour {
     public int UPposLength = 12;
     public GameObject[] menu;
     public GameObject sheilderCircle;
+    public AudioSource[] music;
 
     private Vector3 headPos;
     private Vector3 mousePos;
@@ -37,7 +38,6 @@ public class SnakeHead : MonoBehaviour {
         sheilderCircle.SetActive(false);
     }
     void Start () {
-        Debug.Log("I am running");
         Time.timeScale = 1;
         rdby = gameObject.GetComponent<Rigidbody2D>();
         canvas = GameObject.Find("Snake").transform;
@@ -52,7 +52,6 @@ public class SnakeHead : MonoBehaviour {
             case "Level3": ScoreRecord.Instance.UpdateLevelUI(3); break;
             case "Level4": ScoreRecord.Instance.UpdateLevelUI(4); break;
         }
-        Debug.Log("I am here");
     }
 
     // Update is called once per frame
@@ -62,7 +61,6 @@ public class SnakeHead : MonoBehaviour {
     }
 
     void FixedUpdate () {
-        Debug.Log(" now I am here");
         if (!isRiskDead)
             Move();
         else
@@ -151,6 +149,9 @@ public class SnakeHead : MonoBehaviour {
     {
         if(collision.tag == "food")
         {
+            music[0].volume = AllData.Instance.MusicEffectValue;
+            if(AllData.Instance.MusicEffectToggle)
+                music[0].Play();
             Destroy(collision.gameObject);
             ScoreRecord.Instance.UpdateUI(10, bodyList.Count);
             Grow();
@@ -159,6 +160,9 @@ public class SnakeHead : MonoBehaviour {
         }
         else if (collision.tag == "boom")
         {
+            music[1].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[1].Play();
             Destroy(collision.gameObject);
             if(!issheilder)
             {
@@ -175,6 +179,9 @@ public class SnakeHead : MonoBehaviour {
         }
         else if (collision.tag == "energy")
         {
+            music[2].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[2].Play();
             Destroy(collision.gameObject);
             if(!isUP)
             {
@@ -189,6 +196,9 @@ public class SnakeHead : MonoBehaviour {
         }
         else if (collision.tag == "mushroom")
         {
+            music[3].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[3].Play();
             Destroy(collision.gameObject);
             int num = bodyList.Count;
             for (int i = 0; i < num ; i++)
@@ -199,6 +209,9 @@ public class SnakeHead : MonoBehaviour {
         }
         else if (collision.tag == "poigress")
         {
+            music[4].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[4].Play();
             Destroy(collision.gameObject);
             if(!issheilder)
             {
@@ -223,6 +236,9 @@ public class SnakeHead : MonoBehaviour {
         }
         else if (collision.tag == "sheild")
         {
+            music[5].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[5].Play();
             Destroy(collision.gameObject);
             sheilderCircle.SetActive(true);
             issheilder = true;
@@ -237,7 +253,10 @@ public class SnakeHead : MonoBehaviour {
         }
         else if (collision.tag == "door")
         {
-            if(isHaveAKey)
+            music[6].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[6].Play();
+            if (isHaveAKey)
                 Destroy(collision.gameObject);
         }
         else if (collision.tag == "exit")

@@ -35,16 +35,20 @@ public class ScoreRecord : MonoBehaviour {
             speedText.text = "" + speed;
         if (levelText != null)
             levelText.text = "" + level;
-        lengthText.text = "" + length;
-        scoreText.text = "" + score;
+        if (lengthText != null)
+            lengthText.text = "" + length;
+        if (scoreText != null)
+            scoreText.text = "" + score;
     }
 
     public void UpdateUI(int s,int l)
     {
         score += s;
         length = l;
-        scoreText.text = "" + score;
-        lengthText.text = "" + length;
+        if (scoreText!=null)
+            scoreText.text = "" + score;
+        if(lengthText!=null)
+            lengthText.text = "" + length;
     }
 
     public void UpdateSpeedUI(int s=5)

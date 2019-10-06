@@ -82,6 +82,10 @@ MonoBehaviour:
   oriYpos: 0.743
   yOffset: 0.25
   xOffset: 0
+  maxXpos: 0
+  maxYpos: 0
+  mode: 0
+  music: {fileID: 82607610815216878, guid: 609205c41f58eb644a6b85cb02e6c9d8, type: 2}
 --- !u!212 &212261455418126410
 SpriteRenderer:
   m_ObjectHideFlags: 1

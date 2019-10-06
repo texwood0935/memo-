@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SettingClick : MonoBehaviour {
 
+    public AudioSource music;
     public GameObject settingMenu;
     private Button btn;
 
@@ -13,6 +14,9 @@ public class SettingClick : MonoBehaviour {
         btn = gameObject.GetComponent<Button>();
         btn.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             settingMenu.SetActive(true);
             Time.timeScale = 0;
         });

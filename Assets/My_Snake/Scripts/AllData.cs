@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class AllData : MonoBehaviour {
 
-    public static AllData Instance = new AllData();
+    public static AllData _instance = new AllData();
     public float MusicValue=1;
     public bool MusicToggle=true;
+    public float MusicEffectValue = 1;
+    public bool MusicEffectToggle = true;
+    public int whichClothes=0;
 
-	void Start () {
-        //DontDestroyOnLoad(this.gameObject);
+    public static AllData Instance
+    {
+        get
+        {
+            return _instance;
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

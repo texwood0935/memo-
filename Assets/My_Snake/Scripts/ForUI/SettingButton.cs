@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SettingButton : MonoBehaviour {
 
+    public AudioSource music;
     public GameObject[] button;
     private int whichChoose;
 
@@ -15,14 +16,31 @@ public class SettingButton : MonoBehaviour {
         Button btn2 = (Button)button[1].GetComponent<Button>();
         btn1.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
             whichChoose = 1;
-            Choose();
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
+            Time.timeScale = 1;
+            StartCoroutine(Wait(music.clip.length / 4));
         });
         btn2.onClick.AddListener(delegate ()
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             whichChoose = 2;
+            Time.timeScale = 1;
             Choose();
         });
+    }
+
+
+    IEnumerator Wait(float t)
+    {
+        yield return new WaitForSeconds(t);//运行到这，暂停t秒
+
+        //t秒后，继续运行下面代码
+        Choose();
     }
 
     public void Choose()
@@ -30,6 +48,7 @@ public class SettingButton : MonoBehaviour {
         switch (whichChoose)
         {
             case 1:
+                Debug.Log("Calling 2");
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
                 break;
             case 2:

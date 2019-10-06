@@ -21,7 +21,4 @@ public class ForMusicUnchange : MonoBehaviour {
             maudio = (AudioSource)musicInstant.GetComponent<AudioSource>();
         maudio.volume = AllData.Instance.MusicValue;
     }
-    void Update()
-    {
-    }
 }

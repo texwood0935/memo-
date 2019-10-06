@@ -14,7 +14,8 @@ public class NumberUP : MonoBehaviour {
     {
         GameObject snakeh = GameObject.Find("Snake/snakehead");
         sh = snakeh.GetComponent<SnakeHead_Infinite>();
-        value = sh.GetBodyLength();
+        if(sh!=null)
+            value = sh.GetBodyLength();
         Text = numbertext.GetComponent<TextMesh>();
         if(mode==0)
         {

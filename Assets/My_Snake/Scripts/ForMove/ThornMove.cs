@@ -12,6 +12,7 @@ public class ThornMove : MonoBehaviour {
     public float maxXpos = 0f;
     public float maxYpos = 0f;
     public int mode = 0;
+    public AudioSource music;
 
     private float time;
     private float deltatime;
@@ -19,6 +20,11 @@ public class ThornMove : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        if(mode==1)
+        {
+            music.volume = AllData.Instance.MusicEffectValue;
+            music.Play();
+        }
         this.gameObject.transform.position = new Vector3(oriXpos, oriYpos, 0f);
         time = Time.time;
         deltatime = 0;
@@ -47,11 +53,17 @@ public class ThornMove : MonoBehaviour {
         float y = yOffset * deltatime * Time.deltaTime * 18f;
         if ((x > 0 ? x : -x) > maxXpos)
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             x = 0;
             time = Time.time;
         }   
         if ((y > 0 ? y : -y) > maxYpos)
         {
+            music.volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music.Play();
             y = 0;
             time = Time.time;
         }

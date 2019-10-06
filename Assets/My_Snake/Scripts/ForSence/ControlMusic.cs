@@ -14,13 +14,9 @@ public class ControlMusic : MonoBehaviour {
         sd.value = AllData.Instance.MusicValue;
         asound.volume = sd.value;
     }
-    void Update()
-    {
-    }
     public void ControlSound()
     {
         asound.volume = sd.value;
         AllData.Instance.MusicValue = sd.value;
-        Debug.Log("1:"+AllData.Instance.MusicValue);
     }
 }
