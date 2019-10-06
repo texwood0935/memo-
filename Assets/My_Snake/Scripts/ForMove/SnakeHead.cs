@@ -152,18 +152,20 @@ public class SnakeHead : MonoBehaviour {
             music[0].volume = AllData.Instance.MusicEffectValue;
             if(AllData.Instance.MusicEffectToggle)
                 music[0].Play();
-            Destroy(collision.gameObject);
             ScoreRecord.Instance.UpdateUI(10, bodyList.Count);
             Grow();
-            if(ToolPool.Instance!=null)
-                ToolPool.Instance.CreateTool();
+            if(CreateRiskMap.Instance!=null)
+            {
+                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            }
+            Destroy(collision.gameObject);
         }
         else if (collision.tag == "boom")
         {
             music[1].volume = AllData.Instance.MusicEffectValue;
             if (AllData.Instance.MusicEffectToggle)
                 music[1].Play();
-            Destroy(collision.gameObject);
             if(!issheilder)
             {
                 int num = bodyList.Count;
@@ -174,15 +176,18 @@ public class SnakeHead : MonoBehaviour {
                 }
                 ScoreRecord.Instance.UpdateUI(-20, bodyList.Count);
             }
-            if (ToolPool.Instance != null)
-                ToolPool.Instance.CreateTool();
+            if (CreateRiskMap.Instance != null)
+            {
+                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            }
+            Destroy(collision.gameObject);
         }
         else if (collision.tag == "energy")
         {
             music[2].volume = AllData.Instance.MusicEffectValue;
             if (AllData.Instance.MusicEffectToggle)
-                music[2].Play();
-            Destroy(collision.gameObject);
+                music[2].Play(); 
             if(!isUP)
             {
                 isUP = true;
@@ -191,28 +196,34 @@ public class SnakeHead : MonoBehaviour {
                 ScoreRecord.Instance.UpdateSpeedUI(8);
                 Invoke("SpeedReset", 6.0f);
             }
-            if (ToolPool.Instance != null)
-                ToolPool.Instance.CreateTool();
+            if (CreateRiskMap.Instance != null)
+            {
+                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            }
+            Destroy(collision.gameObject);
         }
         else if (collision.tag == "mushroom")
         {
             music[3].volume = AllData.Instance.MusicEffectValue;
             if (AllData.Instance.MusicEffectToggle)
                 music[3].Play();
-            Destroy(collision.gameObject);
             int num = bodyList.Count;
             for (int i = 0; i < num ; i++)
                 Grow();
             ScoreRecord.Instance.UpdateUI(20, bodyList.Count);
-            if (ToolPool.Instance != null)
-                ToolPool.Instance.CreateTool();
+            if (CreateRiskMap.Instance != null)
+            {
+                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            }
+            Destroy(collision.gameObject);
         }
         else if (collision.tag == "poigress")
         {
             music[4].volume = AllData.Instance.MusicEffectValue;
             if (AllData.Instance.MusicEffectToggle)
                 music[4].Play();
-            Destroy(collision.gameObject);
             if(!issheilder)
             {
                 if (bodyList.Count >= 2)
@@ -231,20 +242,27 @@ public class SnakeHead : MonoBehaviour {
                 }
                 ScoreRecord.Instance.UpdateUI(-10, bodyList.Count);
             }
-            if (ToolPool.Instance != null)
-                ToolPool.Instance.CreateTool();
+            if (CreateRiskMap.Instance != null)
+            {
+                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            }
+            Destroy(collision.gameObject);
         }
         else if (collision.tag == "sheild")
         {
             music[5].volume = AllData.Instance.MusicEffectValue;
             if (AllData.Instance.MusicEffectToggle)
                 music[5].Play();
-            Destroy(collision.gameObject);
             sheilderCircle.SetActive(true);
             issheilder = true;
             Invoke("SheilderReset", 5.0f);
-            if (ToolPool.Instance != null)
-                ToolPool.Instance.CreateTool();
+            if (CreateRiskMap.Instance != null)
+            {
+                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            }
+            Destroy(collision.gameObject);
         }
         else if (collision.tag == "key")
         {
