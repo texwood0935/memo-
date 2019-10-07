@@ -24,6 +24,7 @@ TagManager:
   - color
   - colorline
   - borden
+  - smartgress
   layers:
   - Default
   - TransparentFX

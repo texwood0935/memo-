@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4146709847911398}
   - component: {fileID: 212076394857467954}
   - component: {fileID: 58503218439097262}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: poisonousgrass
   m_TagString: poigress
   m_Icon: {fileID: 0}

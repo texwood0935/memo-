@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class SnakeHead : MonoBehaviour {
 
@@ -14,10 +15,15 @@ public class SnakeHead : MonoBehaviour {
     public GameObject[] menu;
     public GameObject sheilderCircle;
     public AudioSource[] music;
+    public AIMove AI;
+    public AstarPath path;
+    public ChooseClothes wardrobe;
+    private SpriteRenderer me;
 
     private Vector3 headPos;
     private Vector3 mousePos;
     private Vector3 direction;
+    private List<Vector3> ways;
     private Vector2 d;
     private Vector2 d2;
     private Rigidbody2D rdby;
@@ -27,6 +33,7 @@ public class SnakeHead : MonoBehaviour {
     private bool isUP = false;
     private bool issheilder = false;
     private bool isHaveAKey = false;
+    private bool isFindRoad = false;
     private static bool isRiskDead = false;
 
     void Awake()
@@ -38,12 +45,18 @@ public class SnakeHead : MonoBehaviour {
         sheilderCircle.SetActive(false);
     }
     void Start () {
+        me = gameObject.GetComponent<SpriteRenderer>();
+        if(wardrobe!=null)
+            me.sprite = wardrobe.wardrobe[AllData.Instance.whichClothes];
         Time.timeScale = 1;
+        if (AI != null)
+            AI.enabled = false;
         rdby = gameObject.GetComponent<Rigidbody2D>();
         canvas = GameObject.Find("Snake").transform;
         ospeed = speed;
         oPosLength = posLength;
         isRiskDead = false;
+        isFindRoad = false;
         d2 = d = new Vector2(1, 0);
         switch (this.gameObject.scene.name)
         {
@@ -54,15 +67,21 @@ public class SnakeHead : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate () {
         if (!isRiskDead)
-            Move();
+        {
+            if(!isFindRoad)
+                Move();
+            else
+            {
+                if (AI.targetPosition == null)
+                {
+                    path.Scan();
+                }
+                headOldPos.Insert(0, this.gameObject.GetComponent<Transform>().position);
+                Follow();
+            }
+        }
         else
         {
             Quaternion q = Quaternion.identity;
@@ -120,6 +139,15 @@ public class SnakeHead : MonoBehaviour {
         }
         Follow();
     }
+    public void SimpleMove(Vector3 velocity)
+    {
+        Vector2 vec2 = new Vector2(velocity.x, velocity.y);
+        vec2 = vec2.normalized;
+        rdby.velocity = new Vector2(vec2.x, vec2.y) * speed;
+        Quaternion q = Quaternion.identity;
+        q.SetLookRotation(new Vector3(0, 0, -1), new Vector3(vec2.x, vec2.y, 0));
+        Follow();
+    }
 
     void SpeedReset()
     {
@@ -132,6 +160,12 @@ public class SnakeHead : MonoBehaviour {
     {
         issheilder = false;
         sheilderCircle.SetActive(false);
+    }
+    void FindRoadReset()
+    {
+        isFindRoad = false;
+        AI.enabled = false;
+        me.sprite = me.sprite = wardrobe.wardrobe[AllData.Instance.whichClothes]; ;
     }
 
     void Die()
@@ -156,8 +190,9 @@ public class SnakeHead : MonoBehaviour {
             Grow();
             if(CreateRiskMap.Instance!=null)
             {
-                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.CreateToolAgain(2);
                 CreateRiskMap.Instance.InsertPos(collision.transform.position);
+                CreateRiskMap.Instance.RemovePos(collision.transform.position,2);
             }
             Destroy(collision.gameObject);
         }
@@ -178,8 +213,9 @@ public class SnakeHead : MonoBehaviour {
             }
             if (CreateRiskMap.Instance != null)
             {
-                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.CreateToolAgain(1);
                 CreateRiskMap.Instance.InsertPos(collision.transform.position);
+                CreateRiskMap.Instance.RemovePos(collision.transform.position,1);
             }
             Destroy(collision.gameObject);
         }
@@ -198,8 +234,9 @@ public class SnakeHead : MonoBehaviour {
             }
             if (CreateRiskMap.Instance != null)
             {
-                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.CreateToolAgain(1);
                 CreateRiskMap.Instance.InsertPos(collision.transform.position);
+                CreateRiskMap.Instance.RemovePos(collision.transform.position, 1);
             }
             Destroy(collision.gameObject);
         }
@@ -214,8 +251,9 @@ public class SnakeHead : MonoBehaviour {
             ScoreRecord.Instance.UpdateUI(20, bodyList.Count);
             if (CreateRiskMap.Instance != null)
             {
-                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.CreateToolAgain(1);
                 CreateRiskMap.Instance.InsertPos(collision.transform.position);
+                CreateRiskMap.Instance.RemovePos(collision.transform.position, 1);
             }
             Destroy(collision.gameObject);
         }
@@ -244,8 +282,9 @@ public class SnakeHead : MonoBehaviour {
             }
             if (CreateRiskMap.Instance != null)
             {
-                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.CreateToolAgain(1);
                 CreateRiskMap.Instance.InsertPos(collision.transform.position);
+                CreateRiskMap.Instance.RemovePos(collision.transform.position, 1);
             }
             Destroy(collision.gameObject);
         }
@@ -259,9 +298,25 @@ public class SnakeHead : MonoBehaviour {
             Invoke("SheilderReset", 5.0f);
             if (CreateRiskMap.Instance != null)
             {
-                CreateRiskMap.Instance.CreateToolAgain();
+                CreateRiskMap.Instance.CreateToolAgain(1);
                 CreateRiskMap.Instance.InsertPos(collision.transform.position);
+                CreateRiskMap.Instance.RemovePos(collision.transform.position, 1);
             }
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "smartgress")
+        {
+            music[1].volume = AllData.Instance.MusicEffectValue;
+            if (AllData.Instance.MusicEffectToggle)
+                music[0].Play();
+            isFindRoad = true;
+            path.Scan();
+            AI.enabled = true;
+            me.sprite = me.sprite = wardrobe.wardrobe[AllData.Instance.whichClothes+4]; ;
+            Invoke("FindRoadReset", 10.0f);
+            CreateRiskMap.Instance.CreateToolAgain(1);
+            CreateRiskMap.Instance.InsertPos(collision.transform.position);
+            CreateRiskMap.Instance.RemovePos(collision.transform.position, 1);
             Destroy(collision.gameObject);
         }
         else if (collision.tag == "key")
